@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="author" content="">
+	<meta name="copyright" content="UCAR/COMET">
+	<meta name="robots" content="all">
+	<meta name="keywords" content="">
+	<meta name="Description" content="">
+<title>4-Panel Interaction</title>
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.0">
+<!-- STYLES =======================================-->
+  
+  <link rel="stylesheet" type="text/css" media="screen" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="jquery/jquery-ui.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="css/meted-base.min.css">
+
+  <link rel="stylesheet" type="text/css" media="screen" href="media/loop-sample/src/looper.css">
+
+   
+<!-- JS LIBRARIES =================================-->
+  <script type="text/javascript" src="jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="jquery/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="jquery/jquery-plugins.min.js"></script>
+  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="modernizr/modernizr.min.js"></script>
+	
+  <script src="media/loop-sample/src/looper.js"></script>
+  <script src="jquery/fourpanel.js"></script>
+
+<!-- IE SUPPORT ===================================-->
+  <!--[if lte IE 9]>
+    <script type="text/javascript" src="ie-support/respond.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="ie-support/ie-support.css" />
+  <![endif]-->
+<style>
+	#master-container {
+		text-align: center;
+	}
+	.data-viewer-wrap {
+		border: 1px solid black;
+		height: 802px;
+		width: 1302px;
+		float: none;
+		margin: 0px auto;
+	}
+	.dv-panel {
+		width: 650px;
+		height: 400px;
+		float: left;
+		background-color: #000;
+		border: 1px solid red;
+		position: relative;
+	}
+	.dv-panel img {
+		display: block;
+		position: absolute;
+		text-align: center;
+	}
+	.panel-identifier {
+		font-size: 220px;
+		color: #fff;
+	}
+	#panel-1 {
+		clear: none;
+	}
+	#panel-2 {
+		clear: right;
+	}
+	#panel-3 {
+		clear: none;
+	}
+	#panel-4 {
+		clear: right;
+	}
+	.looper-controls {
+		min-height: 50px;
+		width: 1300px;
+		float: none;
+		margin: 0 auto;
+		margin-top: 20px;
+	}
+	.right-aligned {
+		float: right;
+		margin-right: 25px;
+	}
+.dv-select-list {
+  padding-top: 15px;
+}
+
+.dv-select-list dt,
+.dv-select-list dd {
+  float: left; }
+
+.dv-select-list dt {
+  clear: left;
+  width: 100px; }
+	.button-wrap {
+		padding-top: 15px;
+	}
+</style>
+	
+<script>
+// Set looper Max-Width (in Pixels)
+var loopMaxWidth = 640; // Use actual image width!
+$(document).ready(function(){
+	// Looper Settings
+	$('.dv-panel').crosslooper({
+		navigation			: false, // Display the navigation controls
+      	slide_captions		: false, // Display the slide info
+      	slide_counter		: false, // Display the slide counter
+      	speed_controls		: false, // Display the speed controls
+      	forward_backward	: false, // Display the step controls
+      	autoplay			: false  // Set looper to autoplay
+	});
+});
+</script>
+</head>
+ 
+<body>
+
+<div id="master-container" class="container-fluid">
+	<div id="dv-controls" class="looper-controls">
+		<div class="row">
+		<div class="col-sm-4">
+		<dl class="dv-select-list">
+			<dt><label>Panel 1:</label></dt>
+			<dd>
+			<select name="p1" class="panel-selector">
+				<option value="--" selected>--</option>
+				<option value="gfs250uv">Product 1</option>
+				<option value="prod2">Product 2</option>
+			</select>
+			</dd>
+			<dt><label>Panel 3:</label></dt>
+			<dd>
+			<select name="p3" class="panel-selector">
+				<option value="--" selected>--</option>
+				<option value="gfs250uv">Product 1</option>
+				<option value="prod2">Product 2</option>
+			</select>
+			</dd>
+		</dl>
+		</div>
+		<div class="col-sm-4">
+			<div class="button-wrap">
+			<span class="reset glyphicon glyphicon-play" title="play"></span><span class="pauseplay pause glyphicon glyphicon-pause" title="play/pause"></span><span class="prev glyphicon glyphicon-step-backward" title="step backward"></span><span class="next glyphicon glyphicon-step-forward" title="step forward"></span>
+			</div>
+		</div>
+		<div class="col-sm-4">
+		<dl class="dv-select-list right-aligned">
+			<dt><label>Panel 2:</label></dt>
+			<dd>
+			<select name="p2" class="panel-selector">
+				<option value="--" selected>--</option>
+				<option value="gfs250uv">Product 1</option>
+				<option value="prod2">Product 2</option>
+			</select>
+			</dd>
+			<dt><label>Panel 4:</label></dt>
+			<dd>
+			<select name="p4" class="panel-selector">
+				<option value="--" selected>--</option>
+				<option value="gfs250uv">Product 1</option>
+				<option value="prod2">Product 2</option>
+			</select>
+			</dd>
+		</dl>
+		</div>
+		</div>
+	</div>
+	<div class="data-viewer-wrap row">
+		<div id="panel-1" class="dv-panel" data-active-frame="0">
+			<p class="panel-identifier">1</p>
+		</div>
+		<div id="panel-2" class="dv-panel" data-active-frame="0">
+			<p class="panel-identifier">2</p>
+		</div>
+		<div id="panel-3" class="dv-panel" data-active-frame="0">
+			<p class="panel-identifier">3</p>
+		</div>
+		<div id="panel-4" class="dv-panel" data-active-frame="0">
+			<p class="panel-identifier">4</p>
+		</div>
+	</div>
+</div><!-- end master container -->
+</body>
+</html>
