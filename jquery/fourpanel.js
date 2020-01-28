@@ -1,18 +1,19 @@
-//4-Panel Looper Comparison
+//4-Panel Looper Comparison - Dynamic build
 $(document).ready(function(){
-	// set doc vars
-	var loopSize = 9;
-	var p1p = '';
-	var p2p = '';
-	var p3p = '';
-	var p4p = '';
+
+	var loopSize = 27;
+	var p1p = $('#p1').val();
+	var p2p = $('#p2').val();
+	var p3p = $('#p3').val();
+	var p4p = $('#p4').val();
 	
+	var activeFrame = $('.crosslooper').data('active-frame');
 	
 	
 	//Dynamic Loop Setup
 	function loopDynamicSetup (panel, product) {
 		panel = panel.slice(-1);
-		//Define HTML element
+		//Define panels
 		var $panel = $('#panel-' + panel);
 		
 		//Empty Panel Content
@@ -21,50 +22,36 @@ $(document).ready(function(){
 		
 		//Revert to Panel number if no product selected
 		if (product !== '--') {
-			//Generate new product loop elements
+			
+			//Iterate and write loop images in order starting from activeFrame.
+			//Filename index starts at 1, data-frame index starts at 0
 			var i;
 			for( i=0; i<loopSize; i++)
 			{
-				$panel.append('<img class="img-responsive" src="media/loop-sample/'+ product +'_2013020312_000'+(i+1)+'.jpg" data-frame="'+ i +'">');
+				var elementSum = activeFrame + i + 1;
+				var elementSub = (i - loopSize) + activeFrame + 1;
+				var frameNumberSum = parseInt(elementSum - 1);
+				var frameNumberSub = parseInt(elementSub - 1);
+				
+				//Generate new product loop elements
+				if (elementSum<=loopSize) {
+					$panel.append('<img class="img-responsive" src="media/'+ product + elementSum +'.jpg" data-frame="'+ frameNumberSum +'">');
+				}
+				else {
+					$panel.append('<img class="img-responsive" src="media/'+ product + elementSub +'.jpg" data-frame="'+ frameNumberSub +'">');
+				}
+				
 			}
 		} else {
 			$panel.append('<p class="panel-identifier">'+ panel +'</p>')
 		}
 		
-		
-		
-		//console.log(panel, product);
-		
-		
-		switch ( panel ) {
-			case 'p1':
-				
-				break;
-				
-			case 'p2':
-				
-				break;
-				
-			case 'p3':
-				
-				break;
-				
-			case 'p4':
-				
-				break;
-				
-			default:
-				break;	
-		}
 	}
 	
 	
-	//PANEL LOOP SELECTOR
-	$('.panel-selector').on('change', function(){
-		//TODO: pause all loops and retrieve active frame
-		
-		
-		
+	
+	//PANEL LOOP SELECTOR onChange
+	$('.panel-selector').on('change', function(){	
 		//Determine which panel and what product were selected
 		switch ( $(this).attr('name') ) {
 			case 'p1':
@@ -90,8 +77,15 @@ $(document).ready(function(){
 			default:
 				break;
 		}
-		
-		
 	});
 	
+	
+	//PANEL LOOP SELECTOR onLoad
+	$('.panel-selector').each(function(){
+		var panelComp = $(this).attr('name');
+		var prod = $(this).val();
+		
+		loopDynamicSetup(panelComp, prod);
+	});
+
 });

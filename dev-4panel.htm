@@ -46,8 +46,8 @@
 		margin: 0px auto;
 	}
 	.dv-panel {
-		width: 650px;
-		height: 400px;
+		width: 600px;
+		height: 496px;
 		float: left;
 		background-color: #000;
 		border: 1px solid red;
@@ -103,15 +103,11 @@
 	
 <script>
 // Set looper Max-Width (in Pixels)
-var loopMaxWidth = 640; // Use actual image width!
+var loopMaxWidth = 800; // Use actual image width!
 $(document).ready(function(){
 	// Looper Settings
-	$('.dv-panel').crosslooper({
-		navigation			: false, // Display the navigation controls
-      	slide_captions		: false, // Display the slide info
+	$('.crosslooper').crosslooper({
       	slide_counter		: false, // Display the slide counter
-      	speed_controls		: false, // Display the speed controls
-      	forward_backward	: false, // Display the step controls
       	autoplay			: false  // Set looper to autoplay
 	});
 });
@@ -127,60 +123,71 @@ $(document).ready(function(){
 		<dl class="dv-select-list">
 			<dt><label>Panel 1:</label></dt>
 			<dd>
-			<select name="p1" class="panel-selector">
+			<select id="p1" name="p1" class="panel-selector">
 				<option value="--" selected>--</option>
-				<option value="gfs250uv">Product 1</option>
-				<option value="prod2">Product 2</option>
+				<option value="39swir_1min/g17_3_9um-20191024_">39swir_1min</option>
+				<option value="39swir_5min/g17_3_9um-20191024_">39swir_5min</option>
+				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">fire_temp_rgb_1min</option>
+				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">night_fog_diff_1min</option>
 			</select>
 			</dd>
 			<dt><label>Panel 3:</label></dt>
 			<dd>
-			<select name="p3" class="panel-selector">
+			<select id="p3" name="p3" class="panel-selector">
 				<option value="--" selected>--</option>
-				<option value="gfs250uv">Product 1</option>
-				<option value="prod2">Product 2</option>
+				<option value="39swir_1min/g17_3_9um-20191024_">39swir_1min</option>
+				<option value="39swir_5min/g17_3_9um-20191024_">39swir_5min</option>
+				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">fire_temp_rgb_1min</option>
+				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">night_fog_diff_1min</option>
 			</select>
 			</dd>
 		</dl>
 		</div>
 		<div class="col-sm-4">
-			<div class="button-wrap">
-			<span class="reset glyphicon glyphicon-play" title="play"></span><span class="pauseplay pause glyphicon glyphicon-pause" title="play/pause"></span><span class="prev glyphicon glyphicon-step-backward" title="step backward"></span><span class="next glyphicon glyphicon-step-forward" title="step forward"></span>
+			<div id="cl-navigation" class="button-wrap">
+				<span class="reset glyphicon glyphicon-stop" title="stop"></span>
+				<span class="pauseplay play glyphicon glyphicon-play" title="play/pause"></span>
+				<span class="prev glyphicon glyphicon-step-backward" title="step backward"></span>
+				<span class="next glyphicon glyphicon-step-forward" title="step forward"></span>
 			</div>
 		</div>
 		<div class="col-sm-4">
 		<dl class="dv-select-list right-aligned">
 			<dt><label>Panel 2:</label></dt>
 			<dd>
-			<select name="p2" class="panel-selector">
+			<select id="p2" name="p2" class="panel-selector">
 				<option value="--" selected>--</option>
-				<option value="gfs250uv">Product 1</option>
-				<option value="prod2">Product 2</option>
+				<option value="39swir_1min/g17_3_9um-20191024_">39swir_1min</option>
+				<option value="39swir_5min/g17_3_9um-20191024_">39swir_5min</option>
+				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">fire_temp_rgb_1min</option>
+				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">night_fog_diff_1min</option>
 			</select>
 			</dd>
 			<dt><label>Panel 4:</label></dt>
 			<dd>
-			<select name="p4" class="panel-selector">
+			<select id="p4" name="p4" class="panel-selector">
 				<option value="--" selected>--</option>
-				<option value="gfs250uv">Product 1</option>
-				<option value="prod2">Product 2</option>
+				<option value="39swir_1min/g17_3_9um-20191024_">39swir_1min</option>
+				<option value="39swir_5min/g17_3_9um-20191024_">39swir_5min</option>
+				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">fire_temp_rgb_1min</option>
+				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">night_fog_diff_1min</option>
 			</select>
 			</dd>
 		</dl>
 		</div>
 		</div>
 	</div>
-	<div class="data-viewer-wrap row">
-		<div id="panel-1" class="dv-panel" data-active-frame="0">
+	<div class="data-viewer-wrap crosslooper row" data-active-frame="12">
+		<div id="panel-1" class="dv-panel">
 			<p class="panel-identifier">1</p>
 		</div>
-		<div id="panel-2" class="dv-panel" data-active-frame="0">
+		<div id="panel-2" class="dv-panel">
 			<p class="panel-identifier">2</p>
 		</div>
-		<div id="panel-3" class="dv-panel" data-active-frame="0">
+		<div id="panel-3" class="dv-panel">
 			<p class="panel-identifier">3</p>
 		</div>
-		<div id="panel-4" class="dv-panel" data-active-frame="0">
+		<div id="panel-4" class="dv-panel">
 			<p class="panel-identifier">4</p>
 		</div>
 	</div>

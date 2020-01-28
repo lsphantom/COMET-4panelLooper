@@ -9,8 +9,8 @@
       navigation		:	true, // set to false to turn off the navigation
       slide_reset		:	true,
       slide_captions	:	false,
-      slide_counter		:	true,
-      speed_controls	:	true,
+      slide_counter		:	false,
+      speed_controls	:	false,
       forward_backward	:	true,
       autoplay			:	true
     },
@@ -18,17 +18,34 @@
     options = $.extend(defaults, options);
     
     if (options.pause <= options.speed) options.pause = options.speed + 100;
+	  
 	
 	
 // CREATE A DATA LOOPER FOR EACH DIV.looper
     return this.each(function() {
-
+	  //THIS .CROSSLOOPER
       var $this = $(this);
+		
       
       var $interval = ''; // variable used in the setInterval method
       var $curr_pause = options.pause; // take the start value from defaults. this is used for the speed controls
-      
+	  var $active_frame = $this.data('active-frame');
+		
+	  var $nav = $('#cl-navigation');
+	        
       //$this.wrap('<div class="looper-wrap" />');
+		
+	  
+	  // GRAB THE FIRST IMAGE DIMENSIONS
+	  var $image_width = $this.children('img:first').width()+'px';
+	  var $image_height = $this.children('img:first').height()+'px';
+	  $this.children('.dv-panel').css({
+		'position'	:	'relative',
+		'width'		:	'650px',
+		'height'	:	'403px'
+	  });
+		
+		
 
       var $paused = '';
       if (options.autoplay === true) {
@@ -37,68 +54,70 @@
         $paused = true;
       }
       
-      // GRAB THE FIRST IMAGE DIMENSIONS
-      var $image_width = $this.children('img:first').width()+'px';
-      var $image_height = $this.children('img:first').height()+'px';
-      $this.css({
-        'position'	:	'relative',
-        'width'		:	'650px',
-        'height'		:	'400px'
-      });
-	  
-	  
-      // THE DEFAULT CROSSFADE EFFECT
-      if (options.transition === 'crossfade') {
-        
-        var $images = $this.children('img');
-        
-        for (var i = 0; i<$images.length; i++){
-          $images[i].setAttribute('id', i+1);
-        }
-        
-        $this.children('img').css({
-          'position'	:	'absolute'
-          //'left'		:	0
-        });
-        
-        $this.children(':first').appendTo($this).show();
-        
-        if (options.navigation === true) {
-          createNavigation();
 
-          var $nav = $this.siblings('.navigation');
-          
-          // PLAY PAUSE BUTTON
-          $nav.children('.nav_right').children('.pauseplay').click(function() {
-            if ($paused === false) {
-              stopIt();  
-            } else {
-              moveIt();
-            }
-          });
-          
-          // NEXT BUTTON
-          $nav.children('.nav_right').children('.next').click(function() {
-            stopIt();
-            forward();
-          });
-          
-          // PREVIOUS BUTTON
-          $nav.children('.nav_right').children('.prev').click(function() {
-            stopIt();
-            backward();
-          });
-          
-          /// RESET BUTTON
-          $nav.children('.nav_right').children('.reset').click(function() {
-			stopIt();
-            resetSlides();
-          });
-          
+		
+		
+	  $this.children().each(function(){		  
+		  // THE DEFAULT CROSSFADE EFFECT
+		  if (options.transition === 'crossfade') {
+
+			var $images = $(this).children('img');
+
+			for (var i = 0; i<$images.length; i++){
+			  $images[i].setAttribute('id', i+1);
+			}
+
+			$(this).children('img').css({
+			  'position'	:	'absolute'
+			  //'left'		:	0
+			});
+
+			$(this).children(':first').appendTo($(this)).show();
+
+		  // CHECK AUTOPLAY
+		  if (options.autoplay === false) {
+			  stopIt();
+			} else {
+			  $interval = setInterval(function() {
+				forward();
+			  }, options.pause);
+			}
+		  }		
+	  });
+		
+	  
+	  
+	  // PLAY PAUSE BUTTON
+	  $nav.children('.pauseplay').click(function() {
+		if ($paused === false) {
+		  stopIt();  
+		} else {
+		  moveIt();
+		}
+	  });
+	  // NEXT BUTTON
+	  $nav.children('.next').click(function() {
+		stopIt();
+		forward();
+	  });
+      // PREVIOUS BUTTON
+	  $nav.children('.prev').click(function() {
+		stopIt();
+		backward();
+	  });
+	  // RESET BUTTON
+	  $nav.children('.reset').click(function() {
+		stopIt();
+		resetSlides();
+	  });
+		
+		
+		/*  if (options.navigation === true) {
+          createNavigation();      
+                   
           /// SPEED CONTROLS
-        
-          var $slower = $nav.children('.nav_right').children('.speed').children('.slower');
-          var $faster = $nav.children('.nav_right').children('.speed').children('.faster');
+          var $slower = $nav.children('.speed').children('.slower');
+          var $faster = $nav.children('.speed').children('.faster');
           $slower.click(function() {
             if ($curr_pause < 2000) {
               clearInterval($interval);
@@ -113,30 +132,21 @@
               moveIt();
             }
           });
-        }
-        
-      if (options.autoplay === false) {
-          stopIt();
-        } else {
-          $interval = setInterval(function() {
-            forward();
-          }, options.pause);
-        }
-      }
-      
+        } */
+		
+		
+		
+		
+		
       
       
       // PAUSE THE CYCLING
       function stopIt() {
-        $this
-          .siblings('.navigation')
-          .children('.nav_right')
+        $('.button-wrap')
           .children('.pauseplay')
           .removeClass('pause')
 		  .removeClass('glyphicon-pause');
-        $this
-          .siblings('.navigation')
-          .children('.nav_right')
+        $('.button-wrap')
           .children('.pauseplay')
           .addClass('play')
 		  .addClass('glyphicon-play');
@@ -147,15 +157,11 @@
       
       // START THE CYCLING	
       function moveIt() {
-        $this
-          .siblings('.navigation')
-          .children('.nav_right')
+        $('.button-wrap')
           .children('.pauseplay')
           .removeClass('play')
 		  .removeClass('glyphicon-play');
-        $this
-          .siblings('.navigation')
-          .children('.nav_right')
+        $('.button-wrap')
           .children('.pauseplay')
           .addClass('pause')
 		  .addClass('glyphicon-pause');
@@ -167,171 +173,62 @@
       
       
       // STEP FORWARD
-      function forward() {
-        var $curr_first = $this.children(':first');
-        $curr_first.hide().appendTo($this).fadeIn(options.speed);
-          if (options.navigation === true) {
-            fetchSlideNumber();
-          }
-          if (options.slide_captions === true) {
-            updateCaption();
-          }
+      function forward() {		
+		$this.children().each(function(){
+			var $curr_first = $(this).children(':first');
+        	$curr_first.hide().appendTo($(this)).fadeIn(options.speed);
+		});
       }
 
       // STEP BACKWARD
       function backward() {
-          var $curr_last = $this.children(':last');
-          $curr_last.fadeOut(options.speed, function(){
-          $curr_last.show().prependTo($this);
-          if (options.navigation === true) {
-            if (options.slide_counter === true) {
-              fetchSlideNumber();
-            }
-            if (options.slide_captions === true) {
-              updateCaption();
-            }
-          }
+		$this.children().each(function(){
+			var $curr_last = $(this).children(':last');
+			$curr_last.show().prependTo($(this));
         });
       }
-      
-      // RESET SLIDES
-      function resetSlides() {
-      	
-        // gather all the slides and stuff them into an array
-        var $collectedSlides = new Array();
-        var $slidesToCollect = $this.children('img');
-        for (var i = 0; i < $slidesToCollect.length; i++) {
-          var $curr_slide = $slidesToCollect[i].getAttribute('id');
-          $collectedSlides[i] = $this.children('#'+(i+1));
+		
+	  // RESET SLIDES
+	  function resetSlides() {
+		// set active frame to 0
+		$('.crosslooper').attr('data-active-frame', 0);
 		  
-        }
-        
-        // sort the array numerically and ascending
-		//this next line broke the reset button in FF 6-10-13, removing it seemed to solve the issue
-		//$collectedSlides.sort(function(a,b){return a-b});
 		
-        // loop through the array and append them in order
-        for (var x in $collectedSlides) {
-          $this.append($collectedSlides[x]);
-        }
-        
-        // take the first slide and move it to the end
-        $this.children(':first').appendTo($this).show();
-        
-        if (options.navigation === true) {
-          if (options.slide_counter === true) {
-            fetchSlideNumber();
-          }
-          if (options.slide_captions === true) {
-            updateCaption();
-          }
-        }
-      }
 
-      // UPDATE SLIDE NUMBER
-      function fetchSlideNumber(){
-        var $slideID = $this.children(':last').attr('id');
-        var $slideNumber = $this.siblings('.navigation').children('.nav_right').children('.counter').children('.slidenumber');
-        $slideNumber.html($slideID);
-      }
-      
-      // UPDATE CAPTION
-      function updateCaption(){
-        var $slideAlt = $this.children(':last').attr('alt');
-        var $slideCaption = $this.siblings('.navigation').children('.nav_left').children('.caption');
-        $slideCaption.html($slideAlt);
-      }
-	  
-	  //UPDATE SPEED
-	  function updateSpeed(){
-	  	// create stuff here!
-	  
-	  } 
-      
-      
-      // CREATE THE NAVIGATION DIV
-      function createNavigation() {
-		// PUSH LOOPER HEIGHT TO BE RESPONSIVE
-		var $imageSrc = $this.children('img:last').attr("src");
+		// take the first slide OF EACH DV-PANEL and move it to the end
+		$this.children().each(function(){
+			//$(this).children(':first').appendTo($(this)).show();
+			
+			// gather all the slides and stuff them into an array
+			var $collectedSlides = new Array();
+			var $slidesToCollect = $(this).children('img');
+			for (var i = 0; i < $slidesToCollect.length; i++) {
+			  var $curr_slide = $slidesToCollect[i].getAttribute('data-frame');
+			  $collectedSlides[i] = $this.children('#'+(i+1));
+			}
+
+			// sort the array numerically and ascending
+			//this next line broke the reset button in FF 6-10-13, removing it seemed to solve the issue
+			//$collectedSlides.sort(function(a,b){return a-b});
+
+			// loop through the array and append them in order
+			for (var x in $collectedSlides) {
+			  $(this).append($collectedSlides[x]);
+			}
+		});
 		
-		// Create a responsive invisible image
-		$this.parent().append('<img src="' + $imageSrc + '" class="img-responsive invisible" />');
-		
-		
-		// ADD THE LOOPER CONTROLS
-        $this.parent().append('<div class="navigation looper-controls"></div>');
-		
-		
-        var $nav = $this.siblings('.navigation');
-        
-		
-		$nav.append('<div class="nav_left"></div>');
-        $nav.append('<div class="nav_right"></div>');
-        
-        var $nav_left = $nav.children('.nav_left');
-        var $nav_right = $nav.children('.nav_right');
-        
-        
-        if (options.slide_captions === true) {
-			$nav_left.append('<span class="caption"></span>');
-			$nav_left.children('.caption').html($this.children('img:last').attr('alt'));
-        }
-		
-		if (options.slide_counter === true) {
-          $nav_right.append('<span class="counter"><b class="slidenumber"></b>/<b class="totalslides"></b></span>');
-		  $nav_right.children('.counter').children('.slidenumber').html(1);
-		  $nav_right.children('.counter').children('.totalslides').html($this.children('img').size());
-		}
-		
-		if (options.slide_reset === true) {
-		  $nav_right.append('<span class="reset glyphicon glyphicon-stop" title="stop"></span>');
-        }
-		
-		  $nav_right.append('<span class="pauseplay pause glyphicon glyphicon-pause" title="play/pause"></span>');
-        
-        
-        
-        if (options.forward_backward === true) {
-          $nav_right.append('<span class="prev glyphicon glyphicon-step-backward" title="step backward"></span>');
-        }
-		
-		if (options.forward_backward === true) {
-          $nav_right.append('<span class="next glyphicon glyphicon-step-forward" title="step forward"></span>');
-        }
-        
-		if (options.speed_controls === true) {
-          $nav_right.append('<span class="speed"><b class="slower glyphicon glyphicon-minus" title="slower"></b><b class="faster glyphicon glyphicon-plus" title="faster"></b></span>');
-        }
-      	  
+
+		/*if (options.navigation === true) {
+		  if (options.slide_counter === true) {
+			fetchSlideNumber();
+		  }
+		  if (options.slide_captions === true) {
+			updateCaption();
+		  }
+		}*/
 	  }
-	  
-	  // SPECIFY MAX-WIDTH FOR LOOPER WRAP
-	  $('.looper-wrap').each(function() {
-        // Get on screen image
-		var screenImage = $(this).children('.looper').children('img').last();
+      
 
-		// Create new offscreen image to test
-		var theImage = new Image();
-		theImage.src = screenImage.attr("src");
-
-		// Get accurate measurements from that.
-		var imageWidth = theImage.width;
-		var imageHeight = theImage.height;
-		
-		// WebKit adjustment minimum width
-		var loopMinWidth = 640;
-		
-		// WebKit adjustment maximum width set at document head
-		//var loopMaxWidth = 1200;
-		
-		// Write it to the Preload Wrapper
-		if (imageWidth === 0){
-			$('#preload-wrapper').css('min-width', loopMinWidth).css('max-width', loopMaxWidth);
-		}
-		else {
-			$('#preload-wrapper').css('max-width', imageWidth);
-		}
-    });
 	
 	
 	}); 
