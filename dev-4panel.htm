@@ -16,7 +16,7 @@
   <link rel="stylesheet" type="text/css" media="screen" href="jquery/jquery-ui.min.css">
   <link rel="stylesheet" type="text/css" media="screen" href="css/meted-base.min.css">
 
-  <link rel="stylesheet" type="text/css" media="screen" href="media/loop-sample/src/looper.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="jquery/apps/crosslooper/crosslooper.css">
 
    
 <!-- JS LIBRARIES =================================-->
@@ -26,8 +26,8 @@
   <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="modernizr/modernizr.min.js"></script>
 	
-  <script src="media/loop-sample/src/looper.js"></script>
-  <script src="jquery/fourpanel.js"></script>
+  <script src="jquery/apps/crosslooper/crosslooper.js"></script>
+  <script src="jquery/apps/crosslooper/fourpanel.js"></script>
 
 <!-- IE SUPPORT ===================================-->
   <!--[if lte IE 9]>
@@ -35,70 +35,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="ie-support/ie-support.css" />
   <![endif]-->
 <style>
-	#master-container {
-		text-align: center;
-	}
-	.data-viewer-wrap {
-		border: 1px solid black;
-		height: 802px;
-		width: 1302px;
-		float: none;
-		margin: 0px auto;
-	}
-	.dv-panel {
-		width: 600px;
-		height: 496px;
-		float: left;
-		background-color: #000;
-		border: 1px solid red;
-		position: relative;
-	}
-	.dv-panel img {
-		display: block;
-		position: absolute;
-		text-align: center;
-	}
-	.panel-identifier {
-		font-size: 220px;
-		color: #fff;
-	}
-	#panel-1 {
-		clear: none;
-	}
-	#panel-2 {
-		clear: right;
-	}
-	#panel-3 {
-		clear: none;
-	}
-	#panel-4 {
-		clear: right;
-	}
-	.looper-controls {
-		min-height: 50px;
-		width: 1300px;
-		float: none;
-		margin: 0 auto;
-		margin-top: 20px;
-	}
-	.right-aligned {
-		float: right;
-		margin-right: 25px;
-	}
-.dv-select-list {
-  padding-top: 15px;
-}
 
-.dv-select-list dt,
-.dv-select-list dd {
-  float: left; }
-
-.dv-select-list dt {
-  clear: left;
-  width: 100px; }
-	.button-wrap {
-		padding-top: 15px;
-	}
 </style>
 	
 <script>
@@ -123,22 +60,21 @@ $(document).ready(function(){
 		<dl class="dv-select-list">
 			<dt><label>Panel 1:</label></dt>
 			<dd>
-			<select id="p1" name="p1" class="panel-selector">
-				<option value="--" selected>--</option>
-				<option value="39swir_1min/g17_3_9um-20191024_">39swir_1min</option>
-				<option value="39swir_5min/g17_3_9um-20191024_">39swir_5min</option>
-				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">fire_temp_rgb_1min</option>
-				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">night_fog_diff_1min</option>
+			<select id="p1" name="p1" class="panel-master panel-selector">
+				<option value="39swir_1min/g17_3_9um-20191024_" selected>39 SWIR - 1 min</option>
+				<option value="39swir_5min/g17_3_9um-20191024_">39 SWIR - 5 min</option>
+				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">Fire Temp RGB - 1 min</option>
+				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">Night Fog Diff - 1 min</option>
 			</select>
 			</dd>
 			<dt><label>Panel 3:</label></dt>
 			<dd>
 			<select id="p3" name="p3" class="panel-selector">
 				<option value="--" selected>--</option>
-				<option value="39swir_1min/g17_3_9um-20191024_">39swir_1min</option>
-				<option value="39swir_5min/g17_3_9um-20191024_">39swir_5min</option>
-				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">fire_temp_rgb_1min</option>
-				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">night_fog_diff_1min</option>
+				<option value="39swir_1min/g17_3_9um-20191024_">39 SWIR - 1 min</option>
+				<option value="39swir_5min/g17_3_9um-20191024_">39 SWIR - 5 min</option>
+				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">Fire Temp RGB - 1 min</option>
+				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">Night Fog Diff - 1 min</option>
 			</select>
 			</dd>
 		</dl>
@@ -157,27 +93,27 @@ $(document).ready(function(){
 			<dd>
 			<select id="p2" name="p2" class="panel-selector">
 				<option value="--" selected>--</option>
-				<option value="39swir_1min/g17_3_9um-20191024_">39swir_1min</option>
-				<option value="39swir_5min/g17_3_9um-20191024_">39swir_5min</option>
-				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">fire_temp_rgb_1min</option>
-				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">night_fog_diff_1min</option>
+				<option value="39swir_1min/g17_3_9um-20191024_">39 SWIR - 1 min</option>
+				<option value="39swir_5min/g17_3_9um-20191024_">39 SWIR - 5 min</option>
+				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">Fire Temp RGB - 1 min</option>
+				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">Night Fog Diff - 1 min</option>
 			</select>
 			</dd>
 			<dt><label>Panel 4:</label></dt>
 			<dd>
 			<select id="p4" name="p4" class="panel-selector">
 				<option value="--" selected>--</option>
-				<option value="39swir_1min/g17_3_9um-20191024_">39swir_1min</option>
-				<option value="39swir_5min/g17_3_9um-20191024_">39swir_5min</option>
-				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">fire_temp_rgb_1min</option>
-				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">night_fog_diff_1min</option>
+				<option value="39swir_1min/g17_3_9um-20191024_">39 SWIR - 1 min</option>
+				<option value="39swir_5min/g17_3_9um-20191024_">39 SWIR - 5 min</option>
+				<option value="fire_temp_rgb_1min/g17_fire_temp_rgb-20191024_">Fire Temp RGB - 1 min</option>
+				<option value="night_fog_diff_1min/g17_night_fog_difference-20191024_">Night Fog Diff - 1 min</option>
 			</select>
 			</dd>
 		</dl>
 		</div>
 		</div>
 	</div>
-	<div class="data-viewer-wrap crosslooper row" data-active-frame="12">
+	<div class="data-viewer-wrap crosslooper row" data-active-frame="0">
 		<div id="panel-1" class="dv-panel">
 			<p class="panel-identifier">1</p>
 		</div>
